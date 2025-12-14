@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rohit Sharma — Portfolio</title>
+  <meta name="description" content="Rohit Sharma — B.Tech CSE student | Vishwakarma University" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- ✅ AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  
+  <style>
+    :root{
+      --lavender:#e9ddff;
+      --white:#ffffff;
+      --navy:#1e2a78;
+      --muted:#6c6c80;
+      --radius:12px;
+      --container:1100px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+    }
+
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--lavender),var(--white) 130%);
+      min-height:100vh;
+      color:#222;
+    }
+
+    .container{max-width:var(--container);margin:0 auto;padding:28px}
+
+    /* Header */
+    header{
+      position:sticky;top:0;
+      background:rgba(255,255,255,0.6);
+      backdrop-filter:blur(10px);
+      z-index:40;
+      border-bottom:1px solid rgba(0,0,0,0.05);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:48px;height:48px;border-radius:50%;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--navy),#283593);
+      color:#fff;font-weight:700;
+      cursor:pointer;
+    }
+    .navlinks{display:flex;gap:18px;align-items:center}
+    .navlinks a{
+      color:var(--navy);
+      text-decoration:none;
+      font-weight:600;
+    }
+    .btn{
+      padding:8px 14px;
+      border-radius:10px;
+      background:var(--navy);
+      color:#fff;
+      border:none;
+      cursor:pointer;
+      transition:background 0.3s;
+    }
+    .btn:hover{background:#2e3da8}
+
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns:1fr 340px;
+      gap:28px;
+      align-items:center;
+      padding:36px 0;
+    }
+    .intro h1{font-size:36px;margin:0;color:var(--navy);}
+    .intro p{color:var(--muted);margin-top:8px;font-size:1.05rem;}
+
+    .profile-card{
+      background:#fff;
+      padding:20px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,0.05);
+      text-align:center;
+      box-shadow:0 4px 20px rgba(0,0,0,0.05);
+    }
+    .avatar{
+      width:180px;height:180px;
+      border-radius:16px;
+      object-fit:cover;
+      border:4px solid rgba(30,42,120,0.2);
+    }
+
+    /* Sections */
+    section{margin-top:28px}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:16px;
+    }
+    .card{
+      background:rgba(255,255,255,0.9);
+      padding:16px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,0.05);
+      box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .skills .chip{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      margin:6px;
+      border:1px solid rgba(0,0,0,0.1);
+      background:#fff;
+    }
+
+    footer{
+      padding:28px 0;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.4);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:80;
+      backdrop-filter:blur(6px);
+    }
+    .modal{
+      width:320px;
+      background:rgba(255,255,255,0.95);
+      padding:18px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,0.05);
+      text-align:center;
+      box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    }
+    .modal h3{margin-top:0;color:var(--navy);}
+    .modal a{display:block;margin:8px 0;color:var(--navy);font-weight:700;text-decoration:none;}
+    .modal .close{
+      margin-top:12px;
+      padding:8px 12px;
+      border-radius:8px;
+      background:transparent;
+      border:1px solid rgba(0,0,0,0.1);
+      cursor:pointer;
+      color:var(--navy);
+    }
+
+    /* Profile Details overlay (used when this file is opened as 'profile details.html') */
+    .profile-overlay{
+      position:fixed;inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.45);
+      z-index:90;
+    }
+    .profile-overlay .profile-card{
+      width:360px;
+      max-width:92%;
+      border-radius:14px;
+      padding:22px;
+      box-shadow:0 8px 40px rgba(0,0,0,0.35);
+    }
+
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr}
+      .navlinks{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header data-aos="fade-down">
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" id="logoBtn" title="Click to go to Profile Details">RS</div>
+        <div>
+          <div style="font-weight:800;color:var(--navy)">Rohit Sharma</div>
+          <small style="color:var(--muted)">1st Year B.Tech CSE — Vishwakarma University</small>
+        </div>
+      </div>
+
+      <nav class="navlinks">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact" class="btn">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" data-aos="fade-up">
+      <div class="intro">
+        <h1>Hi — I'm Rohit.</h1>
+        <p>I build small web apps, experiment with UI, and create simple games. Currently a 1st-year B.Tech CSE student at Vishwakarma University.</p>
+
+        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn" onclick="openModal('contactModal')">Contact Me</button>
+          <a href="#projects" style="padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);text-decoration:none;color:var(--navy)">View Projects</a>
+        </div>
+
+        <div style="margin-top:22px" id="quick-stats" data-aos="zoom-in">
+          <div style="display:flex;gap:18px;flex-wrap:wrap">
+            <div class="card" style="min-width:120px;text-align:center">
+              <div style="font-weight:700;color:var(--navy)">10+</div>
+              <div style="color:var(--muted);font-size:13px">Small Projects</div>
+            </div>
+            <div class="card" style="min-width:120px;text-align:center">
+              <div style="font-weight:700;color:var(--navy)">C++ / Web</div>
+              <div style="color:var(--muted);font-size:13px">Interests</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside data-aos="fade-left">
+        <div class="profile-card">
+          <img src="C:\Users\sharm\OneDrive\Pictures\kurta.jpeg" alt="Rohit Sharma" class="avatar">
+          <h3 style="margin:12px 0 4px;color:var(--navy)">Rohit Sharma</h3>
+          <small style="color:var(--muted)">B.Tech CSE • Vishwakarma University</small>
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+            <button class="btn" onclick="openModal('socialsModal')">Socials</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about" data-aos="fade-up">
+      <h2 style="color:var(--navy)">About Me</h2>
+      <div class="card" style="margin-top:10px">
+        <p>I'm a first-year Computer Science student who loves building things with code. I enjoy web development, C++, and making small games while learning software engineering fundamentals.</p>
+      </div>
+    </section>
+
+    <section id="projects" data-aos="fade-up">
+      <h2 style="color:var(--navy)">Projects</h2>
+      <div class="grid" style="margin-top:10px">
+        <div class="card" data-aos="zoom-in">
+          <!-- ✅ Image placeholder -->
+          <img src="C:\Users\sharm\OneDrive\Desktop\Portfolio\unicorn.jpg" alt="Unicorn Runner Preview" style="width:100%;border-radius:8px;margin-bottom:10px;">
+          <h3>Unicorn Runner</h3>
+          <p>Simple C++ game with flying, running and coin collection. Object oriented and mission based.</p>
+          <div style="margin-top:8px"><small style="color:var(--muted)">C++ • Game</small></div>
+        </div>
+        <div class="card" data-aos="zoom-in">
+          <!-- ✅ Image placeholder -->
+          <img src="https://via.placeholder.com/300x160?text=LuxeDrape+UI" alt="LuxeDrape UI Preview" style="width:100%;border-radius:8px;margin-bottom:10px;">
+          <h3>LuxeDrape UI</h3>
+          <p>Minimal e-commerce frontend design for product listing and quick checkout flow.</p>
+          <div style="margin-top:8px"><small style="color:var(--muted)">HTML • CSS • JS</small></div>
+        </div>
+        <div class="card" data-aos="zoom-in">
+          <!-- ✅ Image placeholder -->
+          <img src="https://via.placeholder.com/300x160?text=Magnet+9+Listings" alt="Magnet 9 Listings Preview" style="width:100%;border-radius:8px;margin-bottom:10px;">
+          <h3>Magnet 9 Listings</h3>
+          <p>Property listing mockup with filters and contact quick-connect for buyers.</p>
+          <div style="margin-top:8px"><small style="color:var(--muted)">Frontend • UX</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" data-aos="fade-up">
+      <h2 style="color:var(--navy)">Skills</h2>
+      <div class="card skills" style="margin-top:10px">
+        <span class="chip">HTML</span>
+        <span class="chip">CSS</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">C</span>
+		<span class="chip">C++</span>
+		<span class="chip">Basic Python</span>
+		<span class="chip">SQL</span>
+		<span class="chip">Video/Picture Editing</span>
+		<span class="chip">Miicrosoft Tools</span>
+      </div>
+    </section>
+
+    <section id="contact" data-aos="fade-up">
+      <h2 style="color:var(--navy)">Contact</h2>
+      <div class="card" style="margin-top:10px;display:flex;justify-content:space-between;gap:12px;align-items:center">
+        <div>
+          <strong>Email</strong>
+          <div style="color:var(--muted)"><a href="mailto:sharmarohit8116@gmail.com">sharmarohit8116@gmail.com</a></div>
+          <strong style="margin-top:8px;display:block">Phone</strong>
+          <div style="color:var(--muted)"><a href="tel:+917798295397">+91 77982 95397</a></div>
+        </div>
+        <div style="text-align:right">
+          <button class="btn" onclick="openModal('contactModal')">Send Message</button>
+        </div>
+      </div>
+    </section>
+
+    <footer data-aos="fade-up">
+      <div style="margin-top:28px;text-align:center;color:var(--muted)">© 2025 Rohit Sharma. Built for learning and portfolio use.</div>
+    </footer>
+  </main>
+
+  <!-- Social Modal -->
+  <div id="socialsModal" class="modal-backdrop">
+    <div class="modal">
+      <h3>Find me on</h3>
+      <a href="https://www.instagram.com/rxhit_stll/?hl=en" target="_blank">Instagram — @rxhit_stll</a>
+      <a href="https://www.linkedin.com/in/rohit-sharma-6256a0220/" target="_blank">LinkedIn — Rohit Sharma</a>
+      <button class="close" onclick="closeModal('socialsModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal-backdrop">
+    <div class="modal">
+      <h3>Contact Info</h3>
+      <p style="margin:6px 0">📧 <a href="mailto:sharmarohit8116@gmail.com">sharmarohit8116@gmail.com</a></p>
+      <p style="margin:6px 0">📱 <a href="tel:+917798295397">+91 77982 95397</a></p>
+      <button class="close" onclick="closeModal('contactModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Profile Details overlay -->
+  <div id="profileOverlay" class="profile-overlay" aria-hidden="true">
+    <div class="profile-card" id="profileDetailCard" role="dialog" aria-modal="true">
+      <img src="C:\Users\sharm\OneDrive\Pictures\kurta.jpeg" alt="Rohit Sharma" class="avatar">
+      <h3 style="margin:12px 0 4px;color:var(--navy)">Rohit Sharma</h3>
+      <small style="color:var(--muted)">B.Tech CSE • Vishwakarma University</small>
+      <p style="margin-top:12px;color:var(--muted)">Hi — this is my profile details page.</p>
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+        <button class="btn" onclick="openModal('socialsModal')">Socials</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, offset: 80 });
+
+    document.getElementById('logoBtn').addEventListener('click', function() {
+      window.location.href = "profile details.html";
+    });
+
+    function openModal(id){const el=document.getElementById(id);if(el) el.style.display='flex';}
+    function closeModal(id){const el=document.getElementById(id);if(el) el.style.display='none';}
+    document.querySelectorAll('.modal-backdrop').forEach(back=>{
+      back.addEventListener('click', (e)=>{if(e.target===back) back.style.display='none';});
+    });
+    document.addEventListener('keydown',(e)=>{if(e.key==='Escape') document.querySelectorAll('.modal-backdrop').forEach(m=>m.style.display='none');});
+
+    (function(){
+      const overlay = document.getElementById('profileOverlay');
+      const card = document.getElementById('profileDetailCard');
+      const url = window.location.href;
+      if (url.indexOf('profile details.html') !== -1 || url.indexOf('profile-details.html') !== -1) {
+        overlay.style.display = 'flex';
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+      overlay.addEventListener('click', function(e){
+        if (e.target === overlay) {
+          window.location.href = 'index.html';
+        }
+      });
+      card.addEventListener('click', function(e){ e.stopPropagation(); });
+    })();
+  </script>
+</body>
+</html>
